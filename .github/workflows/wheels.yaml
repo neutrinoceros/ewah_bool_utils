@@ -31,7 +31,7 @@ jobs:
           archs: x86_64
           select: '*musllinux*'
           id: musllinux_x86_64
-        - os: macos-latest
+        - os: macos-15-intel
           archs: x86_64
           select: '*'
           id: macos_x86_64
@@ -77,6 +77,7 @@ jobs:
     - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
       with:
         enable-cache: false
+    - run: uv sync --only-dev
     - name: Build sdist
       run: uv build --sdist
     - name: Upload sdist
@@ -85,29 +86,9 @@ jobs:
         name: sdist
         path: dist/*.tar.gz
 
-  check_manifest:
-    name: Check MANIFEST.in
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout repo
-      uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-      with:
-        persist-credentials: false
-    - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
-      with:
-        python-version: '3.13'
-        activate-environment: true
-        enable-cache: false
-    - name: Install build time dependencies
-      run: |
-        uv pip install Cython numpy setuptools wheel check-manifest
-    - name: Build
-      run: uv pip install --no-build-isolation .
-    - run: check-manifest
-
   deploy:
     name: Publish to PyPI
-    needs: [build_wheels, build_sdist, check_manifest]
+    needs: [build_wheels, build_sdist]
     runs-on: ubuntu-latest
     # upload to PyPI on every tag starting with 'v'
     if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags/v')

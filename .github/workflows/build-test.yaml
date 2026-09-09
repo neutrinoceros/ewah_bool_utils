@@ -23,7 +23,7 @@ jobs:
         os:
         - ubuntu-latest
         python-version:
-        - 3.11.0
+        - '3.11'
         - '3.12'
         - '3.13'
         - '3.14'
@@ -35,7 +35,7 @@ jobs:
         - os: macos-latest
           python-version: '3.15'
         - os: ubuntu-22.04
-          python-version: 3.11.0
+          python-version: '3.11'
           install-args: --resolution=lowest
 
     runs-on: ${{ matrix.os }}
@@ -54,7 +54,7 @@ jobs:
 
     - name: Build
       run: |
-        uv sync --group test ${{ matrix.install-args }}
+        uv sync --group test --no-editable ${{ matrix.install-args }}
     - name: Run test suite
       run: |
         uv run --no-sync pytest --color yes
