@@ -36,6 +36,7 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3.15",
     "Programming Language :: Python :: Free Threading :: 1 - Unstable"
 ]
 
@@ -78,7 +79,7 @@ filterwarnings = [
 ]
 
 [tool.cibuildwheel]
-skip = ["cp314t-*"]
+skip = ["cp3{14,15}t-*"]
 build-frontend = "uv; args: --no-config"
 build-verbosity = 1
 test-groups = ["test"]
