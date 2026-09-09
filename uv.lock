@@ -9,7 +9,7 @@ resolution-markers = [
 ]
 
 [manifest]
-constraints = [{ name = "meson", specifier = ">=1.5" }]
+constraints = [{ name = "meson", specifier = ">=1.6.0" }]
 
 [[package]]
 name = "colorama"
