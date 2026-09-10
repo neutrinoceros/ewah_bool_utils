@@ -73,3 +73,22 @@ py.install_sources(
     'tests/test_ewah_bool_utils.py',
     subdir: 'tests',
 )
+
+# include headers as easily locatable data files
+# to allow yt to link from a wheel
+install_data(
+    'src/ewah_bool_utils/cpp/boolarray.h',
+    'src/ewah_bool_utils/cpp/ewah-inl.h',
+    'src/ewah_bool_utils/cpp/ewah.h',
+    'src/ewah_bool_utils/cpp/ewahutil.h',
+    'src/ewah_bool_utils/cpp/runninglengthword.h',
+    # keep in sync with ewah_bool_utils/__init__.py::get_include
+    install_dir: py.get_install_dir() / 'headers',
+)
+install_data(
+    'src/ewah_bool_utils/ewah_bool_array.pxd',
+    'src/ewah_bool_utils/ewah_bool_array.pxd',
+    'src/ewah_bool_utils/ewah_bool_wrap.pxd',
+    'src/ewah_bool_utils/morton_utils.pxd',
+    install_dir: py.get_install_dir() / 'ewah_bool_utils',
+)
